@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>初始界面-指令详情及操作</title>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <script src="https://cdn.bootcss.com/qs/6.5.1/qs.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/index.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="main" class="col-md-12">
+	<h1>计分牌调度算法</h1>
+	<!-- 激活的菜单样式为  active 类 -->
+	<!-- 为了阻止链接在点击时跳转，我们使用了 "prevent" 修饰符 (preventDefault 的简称)。 -->
+	<div class="col-md-10 col-md-offset-1">
+		<div class="col-md-8" id="leftBox">
+			<h2>{% verbatim myblock %}
+    {{ name }}
+  {% endverbatim myblock %}</h2>
+			<nav id="nav" v-bind:class="active" v-on:click.prevent>
+				<a href="#" class="home" v-on:click="makeActive('home')">
+                    {% verbatim myblock %}
+    {{ instructionName }}
+  {% endverbatim myblock %}</a>
+				<a href="#" class="projects" v-on:click="makeActive('projects')">
+                    {% verbatim myblock %}
+    {{ fuctionName }}
+  {% endverbatim myblock %}
+
+
+                </a>
+				<a href="#" class="services" v-on:click="makeActive('services')">
+                    {% verbatim myblock %}
+    {{ resirterName }}
+  {% endverbatim myblock %}</a>
+			</nav>
+
+			<div class="col-md-12 table-responsive">
+				<table class="table text-center text-nowrap" v-if="active=='home'">
+<!--					<caption>响应式表格布局</caption>-->
+					<thead>
+						<tr>
+							<th>Instruction</th>
+							<th>target</th>
+							<th>j</th>
+							<th>k</th>
+							<th>Issue</th>
+							<th>Read operand</th>
+							<th>Execution Complet</th>
+							<th>Write Result</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<template v-for="item in instructions">
+
+							<tr>
+								<td>
+									 {% verbatim myblock %} {{ item["instruction"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["target"] }} {% endverbatim myblock %}
+									</td>
+								<td>
+									{% verbatim myblock %} {{ item["j"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["k"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["issue"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["readOperand"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["exeComplet"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["writeResult"] }} {% endverbatim myblock %}
+								</td>
+							</tr>
+						</template>
+
+					</tbody>
+				</table>
+				<table class="table text-center" v-if="active=='projects'">
+				<!--					<caption>响应式表格布局</caption>-->
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Busy</th>
+							<th>Op</th>
+							<th>Fi</th>
+							<th>Fj</th>
+							<th>Fk</th>
+							<th>Qj</th>
+							<th>Qk</th>
+							<th>Rj</th>
+							<th>Rk</th>
+						</tr>
+					</thead>
+					<tbody>
+						<template v-for="item in functionals">
+
+							<tr>
+								<td>
+									 {% verbatim myblock %} {{ item["name"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["busy"] }} {% endverbatim myblock %}
+									</td>
+								<td>
+									{% verbatim myblock %} {{ item["Op"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Fi"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Fj"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Fk"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Qj"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Qk"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Rj"] }} {% endverbatim myblock %}
+								</td>
+								<td>
+									{% verbatim myblock %} {{ item["Rk"] }} {% endverbatim myblock %}
+								</td>
+							</tr>
+						</template>
+
+					</tbody>
+				</table>
+				<table class="table  text-center text-nowrap" v-if="active=='services'">
+				<!--					<caption>响应式表格布局</caption>-->
+					<thead>
+						<tr>
+							<th>F0</th>
+							<th>F1</th>
+							<th>F2</th>
+							<th>F3</th>
+							<th>F4</th>
+							<th>F5</th>
+							<th>F6</th>
+							<th>F7</th>
+							<th>F8</th>
+							<th>F9</th>
+							<th>F10</th>
+							<th>F11</th>
+						</tr>
+					</thead>
+					<tbody>
+
+
+						<tr>
+							<td>
+								 {% verbatim myblock %} {{ registers["F0"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								 {% verbatim myblock %} {{ registers["F1"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F2"] }} {% endverbatim myblock %}
+								</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F3"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F4"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F5"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F6"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F7"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F8"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F9"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F10"] }} {% endverbatim myblock %}
+							</td>
+							<td>
+								{% verbatim myblock %} {{ registers["F11"] }} {% endverbatim myblock %}
+							</td>
+
+						</tr>
+
+
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+		<div class="col-md-4" id="rightBox" style="background-color:dark-blue">
+			<h1>operate</h1>
+
+			<form role="form" id="form1">
+                {% csrf_token %}
+			  <div class="form-group">
+				<label for="name">the code is below!</label>
+				<textarea class="form-control" rows="5" v-model="message1"></textarea>
+			  </div>
+				<button type="button" class="btn btn-warning" v-on:click="inputInstructions">input instruction</button>
+			</form>
+
+			<div style="height:1px;border:1px dashed gray;margin:15px 0;" class="col-md-12"></div>
+
+			<form role="form"  class="form-horizontal" style="margin-top:10px">
+                {% csrf_token %}
+				<div class="form-group">
+					<div class="col-sm-4">
+						<button type="button" class="btn" disabled>times now</button>
+					</div>
+
+<!--					>-->
+					<div class="col-sm-6">
+						<label class="col-sm-4 control-abel">
+
+							{% verbatim myblock %} {{ endCircle }} {% endverbatim myblock %}
+						</label>
+						<label class="hidden">
+							{% verbatim myblock %} {{ maxCircle }} {% endverbatim myblock %}
+						</label>
+<!--						<input type="number" class="bigLabel disabled" value="" disabled>-->
+					</div>
+				  </div>
+			</form>
+			<form role="form">
+                {% csrf_token %}
+			  <div class="form-group">
+
+				<input v-model="message2" type="number" class="form-control" rows="5" />
+			  </div>
+				<button type="button" class="btn btn-success" v-on:click="inputNums">input the instruction number</button>
+			</form>
+
+			<form role="form" >
+			  <div class="form-group">
+					<div class="col-sm-6">
+						<button type="button" class="btn btn-info" v-on:click="before"> < before</button>
+					</div>
+				    <div class="col-sm-6" style="padding-bottom:20px">
+						<button type="button" class="btn btn-info" v-on:click="after">before > </button>
+					</div>
+			  </div>
+
+			</form>
+		</div>
+	</div>
+ 	<!-- 以下 "active" 变量会根据当前选中的值来自动变换 -->
+
+
+</div>
+
+<script src="../static/index.js">
+</script>
+</body>
+</html>
